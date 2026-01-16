@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1b2a4e">
+    <title>MH Academy - HSC Economics</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #ff0055;
+            --dark-bg: #101926;
+            --light-bg: #ffffff;
+            --text-light: #ffffff;
+            --text-dark: #222222;
+            --gray: #a0aabf;
+            --green: #00c853;
+            --red: #ff3d00;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* --- Buttons --- */
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-block;
+            border: none;
+            font-family: 'Roboto', sans-serif;
+        }
+        .btn-dark { background: var(--primary); color: #fff; box-shadow: 0 4px 15px rgba(255,0,85,0.4); }
+        .btn-light { background: #f0f0f0; color: #333; }
+        .btn:hover { transform: translateY(-2px); }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(16, 25, 38, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.4rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .logo i { color: var(--primary); }
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a { color: #ccc; font-size: 0.95rem; transition: 0.3s; }
+        .nav-links a:hover { color: #fff; }
+
+        /* =========================================
+           1. HERO SECTION (Video + Glass + Intro Image)
+           ========================================= */
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            overflow: hidden;
+        }
+        
+        /* Background Video */
+        .video-bg {
+            position: absolute;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(16, 25, 38, 0.4);
+            z-index: 2;
+        }
+
+        .hero-content-wrapper {
+            position: relative;
+            z-index: 3;
+            max-width: 800px; /* Increased width for intro image */
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            flex: 1;
+        }
+
+        /* Added styling for the Intro Image */
+        .hero-intro-img {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.1);
+            display: none; /* Hidden on mobile by default */
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .hero-title span { color: var(--primary); }
+        .hero-desc { font-size: 1.1rem; margin-bottom: 30px; color: #ddd; }
+
+        /* =========================================
+           2. WHITE DIVISION (MacBook + Your Image)
+           ========================================= */
+        .white-division {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            padding: 80px 0;
+            overflow: hidden;
+        }
+
+        .wd-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .wd-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 900;
+        }
+        .wd-text p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+        .wd-features li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+        .wd-features i { color: var(--primary); }
+
+        /* MacBook Container */
+        .mac-device {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .mac-screen {
+            background: #000;
+            border-radius: 12px 12px 0 0;
+            border: 12px solid #d1d1d6; /* Silver Bezel */
+            position: relative;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            display: flex; /* Center image inside */
+            align-items: center;
+            justify-content: center;
+        }
+        .mac-screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px; /* Small radius to match inside of bezel */
+        }
+        .mac-base {
+            background: #e1e1e6;
+            height: 14px;
+            border-radius: 0 0 12px 12px;
+            margin-top: -2px;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* =========================================
+           3. BLACK DIVISION (Laptop + Mobile Image)
+           ========================================= */
+        .black-division {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .bd-content {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .bd-content h2 { font-size: 2.5rem; margin-bottom: 15px; font-family: 'Roboto', sans-serif; }
+        .bd-content p { color: var(--gray); font-size: 1.1rem; }
+
+        /* Image Container Centering */
+        .devices-showcase {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .mockup-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s;
+        }
+        .mockup-img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Extra Feature Image (mac_default.jpg) */
+        .extra-feature {
+            padding: 60px 0;
+            background: #161f33;
+        }
+        .feature-card-lg {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 40px;
+            border-radius: 20px;
+        }
+        .feature-img-box {
+            flex: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid var(--border-glass);
+        }
+        .feature-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .feature-text-box { flex: 1; }
+        .feature-text-box h3 { font-size: 2rem; margin-bottom: 15px; color: var(--primary); }
+        .feature-text-box p { color: #ccc; line-height: 1.6; }
+
+        /* --- Responsive --- */
+        @media (min-width: 992px) {
+            .hero-intro-img { display: block; } /* Show intro image on desktop */
+        }
+
+        @media (max-width: 900px) {
+            .hero-title { font-size: 2rem; }
+            .hero-content-wrapper { flex-direction: column; text-align: center; }
+            .glass-box { width: 100%; }
+            .wd-grid { grid-template-columns: 1fr; text-align: center; }
+            .wd-features { display: inline-block; text-align: left; }
+            .feature-card-lg { flex-direction: column; }
+            .hero-intro-img { display: none; } /* Hide intro image on small screens if needed */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo"><i class="fa-solid fa-graduation-cap"></i> MH Academy</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#hero">হোম</a></li>
+                    <li><a href="#market">অ্যানালাইসিস</a></li>
+                    <li><a href="#course">অনলাইন কোর্স</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 1. HERO SECTION: Video BG + Glass + Intro Image -->
+    <section class="hero-section" id="hero">
+        <!-- Background Video -->
+        <video autoplay muted loop playsinline class="video-bg">
+            <source src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4" type="video/mp4">
+        </video>
+        
+        <div class="overlay"></div>
+
+        <div class="container hero-content-wrapper">
+            <!-- Text Content -->
+            <div class="glass-box">
+                <h1 class="hero-title">ভবিষ্যতে বিনিয়োগ করুন, <br><span>HSC ইকোনমিক্সে</span> A+ নিশ্চিত করুন</h1>
+                <p class="hero-desc">আমাদের আধুনিক প্ল্যাটফর্মে শিখুন ইকোনমিক্স। বাস্তব মার্কেট ডেটা, লাইভ অ্যানালাইসিস এবং স্মার্ট পড়ার পদ্ধতি।</p>
+                <button class="btn btn-dark" onclick="alert('রেজিস্ট্রেশন পেজে যাচ্ছে...')">এখনই ভর্তি হন</button>
+            </div>
+
+            <!-- YOUR IMAGE 1: Intro / Platform Overview -->
+            <!-- Change 'images/pasted_image_1768566937169.png' if path is different -->
+            <img src="images/pasted_image_1768566937169.png" alt="Platform Intro" class="hero-intro-img">
+        </div>
+    </section>
+
+    <!-- 2. WHITE DIVISION: MacBook + Your Graph Image -->
+    <section class="white-division" id="market">
+        <div class="container wd-grid">
+            <!-- Text Content -->
+            <div class="wd-text">
+                <h2>বাস্তব জীবনের <span style="color:var(--primary)">ডেটা অ্যানালাইসিস</span></h2>
+                <p>ইকোনমিক্স শুধুমাত্র বইয়ের পাতায় নয়, এটি বাস্তব বিশ্বের বাজার ব্যবস্থা। আমাদের স্পেশাল ক্লাসে আমরা লাইভ স্টক মার্কেট গ্রাফ এবং ইকোনমিক ট্রেন্ড বিশ্লেষণ করে পড়াই।</p>
+                <ul class="wd-features">
+                    <li><i class="fa-solid fa-chart-line"></i> লাইভ স্টক মার্কেট গ্রাফ</li>
+                    <li><i class="fa-solid fa-brain"></i> প্র্যাকটিক্যাল এনালাইসিস স্কিল</li>
+                    <li><i class="fa-solid fa-bullseye"></i> রিয়েল টাইম ডেটা ইন্টারপ্রেটেশন</li>
+                </ul>
+            </div>
+
+            <!-- YOUR IMAGE 2: MacBook with Live Graph -->
+            <!-- Change 'images/mockup__macbook.png' if path is different -->
+            <div class="mac-device">
+                <div class="mac-screen">
+                    <img src="images/mockup__macbook.png" alt="MacBook Trading Graph">
+                </div>
+                <div class="mac-base"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Extra Feature: mac_default.jpg -->
+    <section class="extra-feature">
+        <div class="container">
+            <div class="feature-card-lg">
+                <div class="feature-img-box">
+                    <!-- YOUR IMAGE 3: ETF Trading Interface -->
+                    <img src="images/mac_default.jpg" alt="ETF Market Interface">
+                </div>
+                <div class="feature-text-box">
+                    <h3>ETF এবং ট্রেডিং ইন্টারফেস</h3>
+                    <p>শুধুমাত্র সাধারণ অর্থনীতি নয়, আমরা ETF এবং মার্কেট ট্রেন্ড বোঝার জন্য অ্যাডভান্সড ট্রেডিং প্ল্যাটফর্ম ইন্টারফেস শেখাই। এটি আপনাকে বিশ্ববিদ্যালয় পর্যায়ের পড়াশোনার জন্য প্রস্তুত করবে।</p>
+                    <button class="btn btn-dark" style="margin-top:15px;">বিস্তারিত জানুন</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. BLACK DIVISION: Laptop + Mobile Variation -->
+    <section class="black-division" id="course">
+        <div class="container">
+            <div class="bd-content">
+                <h2>যেকোনো ডিভাইসে পড়াশোনা</h2>
+                <p>আমাদের অনলাইন কোর্সটি আপনার ল্যাপটপ বা মোবাইলে—যেখানেই থাকুন না কেন, ক্লাস করুন নিজের সুবিধামতো।</p>
+            </div>
+
+            <div class="devices-showcase">
+                <!-- YOUR IMAGE 4: Laptop and Mobile Devices -->
+                <!-- Change 'images/mockup__devices.png' if path is different -->
+                <img src="images/mockup__devices.png" alt="Laptop and Mobile App" class="mockup-img">
+            </div>
+        </div>
+    </section>
+
+    <footer style="background: #080c12; padding: 40px 0; text-align: center; color: #777; font-size: 0.9rem; border-top: 1px solid #222;">
+        <div class="container">
+            <p>&copy; 2024 MH Academy. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
